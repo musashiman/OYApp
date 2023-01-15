@@ -13,9 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('oyapps', function (Blueprint $table) {
+        Schema::create('diaries', function (Blueprint $table) {
             $table->id();
+            $table->string("body",500);
+            $table->date("date");
+            $table->string("image_path")->nullable();
+            $table->bigInteger("users_id")->unsigned();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -26,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('oyapps');
+        Schema::dropIfExists('diaries');
     }
 };
