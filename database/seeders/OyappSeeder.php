@@ -17,10 +17,11 @@ class OyappSeeder extends Seeder
     public function run()
     {
         //
-        DB::table("oyapps")->insert([
+        DB::table("diaries")->insert([
             "body" => "スーパーカップ",
-            "image" => "画像のURLを記載する",
-            "users_id" => 1,
+            "date" => now(),
+            "image_path" => "random_letters",
+            "users_id" => 2,
             "created_at"=> now(),
             "updated_at" => now(),
             "deleted_at" => null,

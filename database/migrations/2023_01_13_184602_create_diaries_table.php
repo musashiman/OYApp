@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string("body",500);
             $table->date("date");
             $table->string("image_path")->nullable();
-            $table->bigInteger("users_id")->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
