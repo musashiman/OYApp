@@ -26,18 +26,23 @@
             <h1 class="body">
                 {{ $oyapp->body }}
             </h1>
-            <div class="date">
-                <div class="date__oyapp">
-                    <h3>本文</h3>
-                    <p>{{ $oyapp->date }}</p>    
-                </div>
+          
+            <div class="date__oyapp">
+                <h3>本文</h3>
+                <p>{{ $oyapp->date }}</p>    
             </div>
+            
+            @if($oyapp->image_path)
+            <div class="image_path">
+                <img src="{{$oyapp->image_path}}" alt="画像が読み取れません。"/>
+            </div>
+            @endif
             <div class="footer">
                 <a href="/">戻る</a>
             </div>
         </div>
         
-        {{Auth::user()->name }}
+        <p>ログインユーザー：{{Auth::user()->name }}</p>
         
       
         </x-app-layout>

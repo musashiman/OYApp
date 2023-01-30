@@ -25,9 +25,9 @@ Route::get("/","index")->name('index');
 Route::get("/oyapps/create","create")->name("create");
 Route::get("/oyapps/{oyapp}","show")->name("show");
 Route::post('/oyapps', "store")->name("store");
-Route::get('/oyapps/{oyapp}/edit', "edit")->name("update");
-Route::put("/oyapps/{oyapp}","update")->name("delete");
-Route::delete("/oyapps/{oyapp}","delete")->name("edit");
+Route::get('/oyapps/{oyapp}/edit', "edit")->name("edit");
+Route::put("/oyapps/{oyapp}","update")->name("update");
+Route::delete("/oyapps/{oyapp}","delete")->name("delete");
     
 });
 

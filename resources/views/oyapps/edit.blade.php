@@ -23,13 +23,15 @@
                     <form action="/oyapps/{{ $oyapp->id }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <div class='content__body'>
-                            <h2>タイトル</h2>
+                        <div class='body'>
+                            <h2>Body</h2>
                             <input type='text' name='oyapp[body]' value="{{old( 'oyapp->body') }}">
+                            <p class="title_error" style="color:red">{{$errors->first("oyapp.body")}}</p>
                         </div>
-                        <div class='content__image_path'>
-                            <h2>本文</h2>
-                            <input type='text' name='oyapp[image_path]' value="{{old ('oyapp->image_path') }}">
+                        <div class='image_path'>
+                            <h2>Image</h2></h2>
+                            <input name="image_path" type="file" />
+                            <p class="body_error" style="color:red">{{$errors->first("oyapp.image_path")}}</p>
                         </div>
                         <input type="submit" value="保存">
                     </form>
@@ -40,8 +42,8 @@
             </div>
         
         </div>
-        
-        {{Auth::user()->name }}
+        <br/>
+        <p>ログインユーザー：{{Auth::user()->name }}</p>
         
       
         </x-app-layout>

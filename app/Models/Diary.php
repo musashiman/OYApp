@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Diary extends Model
 {
-    use SoftDeletes;
     use HasFactory;
+    use SoftDeletes;
     
     public function user()
     {
@@ -26,3 +26,4 @@ class Diary extends Model
     
 
 }
+

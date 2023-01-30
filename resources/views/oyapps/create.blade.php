@@ -29,7 +29,7 @@
                 </div>
                 <div class="image_path">
                     <h2>image_path</h2>
-                    <input name="image" type="file" >
+                    <input name="image_path" type="file" >
                     <p class="body_error" style="color:red">{{$errors->first("oyapp.image_path")}}</p>
                 </div>
                 
@@ -42,7 +42,7 @@
         
         </div>
         
-        {{Auth::user()->name }}
+        <p>ログインユーザー：{{Auth::user()->name }}</p>
         
       
         </x-app-layout>

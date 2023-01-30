@@ -36,8 +36,10 @@ class OyappController extends Controller
     // $user = Auth::user();
     // $users_id = $user->id;
     // $input["users_id"] = $users_id;
-    $image_url = Cloudinary::upload($request->file("image")->getRealPath())->getSecurePath();
-    dd($image_url);
+    if($request->file("image_path")){
+    $image_path = Cloudinary::upload($request->file("image_path")->getRealPath())->getSecurePath();
+    $input += ['image_path' =>$image_path];
+    }
     $oyapp->fill($input)->save();
     return redirect('/oyapps/'.$oyapp->id);
     }

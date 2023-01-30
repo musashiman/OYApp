@@ -22,31 +22,31 @@
             
             @foreach ($oyapps as $oyapp)
             <div class='oyapp'>
-                <h2 class="body">
+                <h1 class="body">
                     <a href="/oyapps/{{$oyapp->id}}">{{$oyapp->body}}</a>
-                </h2>
+                </h1>
                 <p class="image">{{$oyapp->image_path}}</p>
                 <p class="date">{{$oyapp->date}}</p>
                 <form action="/oyapps/{{$oyapp->id}}" id="form_{{$oyapp->id}}" method="post">
                     @csrf
                     @method("DELETE")
-                    <button type="button" onclick="deeltePost({{$oyapp->id}})">delete</button>
+                    <button type="button" onclick="deletePost({{$oyapp->id}})">delete</button>
                 </form>
             </div>
             @endforeach
         </div>
         
-        {{Auth::user()->name }}
+        <p>ログインユーザー：{{Auth::user()->name }}</p>
         
+        </x-app-layout>
         <script>
             function deletePost(id){
                 "use strict"
                 
-                if(confirm("本当にいいですか？")){
-                    document.getElementById("form_${id}").submit();
+                if(confirm("本当にいいですか？\n本当に削除する？")){
+                    document.getElementById(`form_${id}`).submit();
                 }
             }
         </script>
-        </x-app-layout>
     </body>
 </html>
