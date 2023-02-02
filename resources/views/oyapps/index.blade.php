@@ -25,7 +25,9 @@
                 <h1 class="body">
                     <a href="/oyapps/{{$oyapp->id}}">{{$oyapp->body}}</a>
                 </h1>
-                <p class="image">{{$oyapp->image_path}}</p>
+                @if($oyapp->image_path== true)
+                    <img src="{{$oyapp->image_path}}" width="200" height="200" alt="写真がないよ。"/>
+                @endif
                 <p class="date">{{$oyapp->date}}</p>
                 <form action="/oyapps/{{$oyapp->id}}" id="form_{{$oyapp->id}}" method="post">
                     @csrf
@@ -34,6 +36,23 @@
                 </form>
             </div>
             @endforeach
+        </div>
+        
+        <div class="d-flex justify-content-end flex-grow-1">
+           @if (Auth::user()->isFollowing($user->id))
+               <form action="{{ route('unfollow', ['user' => $user->id]) }}" method="POST">
+                   {{ csrf_field() }}
+                   {{ method_field('DELETE') }}
+
+                   <button type="submit" class="btn btn-danger">フォロー解除</button>
+               </form>
+            @else
+               <form action="{{ route('follow', ['user' => $user->id]) }}" method="POST">
+                   {{ csrf_field() }}
+
+                   <button type="submit" class="btn btn-primary">フォローする</button>
+               </form>
+            @endif
         </div>
         
         <p>ログインユーザー：{{Auth::user()->name }}</p>

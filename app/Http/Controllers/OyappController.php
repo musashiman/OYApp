@@ -61,6 +61,30 @@ class OyappController extends Controller
     $oyapp->delete();
     return redirect("/");
     }
+    
+    public function follow(User $user)
+    {
+        $follower = auth()->user();
+        // フォローしているかのチェック
+        $is_following = $follower->isFollowing($user->id);
+        if(!$is_following){
+            // フォローしていなければ以下の処理を行う。
+            $follower->follow($user->id);
+            return back();
+        }
+        
+    }
+    
+    public function unfollow(User $user)
+    {
+        $follower = auth()->user();
+        // フォローしているかのチェック
+        $is_following = $follower->isFollowing($user->id);
+        if($is_following){
+            $follower->unfollow($user->id);
+            return back();
+        }
+    }
 
 
 }
