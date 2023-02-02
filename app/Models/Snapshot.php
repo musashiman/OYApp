@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Oyapp extends Model
+class Snapshot extends Model
 {
     use HasFactory;
+    
+    protected $table = "snapshots";
 }
