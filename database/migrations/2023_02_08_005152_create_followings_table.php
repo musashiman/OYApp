@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('diaries', function (Blueprint $table) {
+        Schema::create('followings', function (Blueprint $table) {
             $table->id();
-             $table->unsignedBigInteger("user_id")->comment("ユーザーID");
-            $table->string("body",500);
-            $table->date("date");
-            $table->string("image_path");
+            $table->unsignedBigInteger("user_id")->comment("ユーザーID");
+            $table->unsignedBigInteger("following_user_id")->comment("フォローしている人のID");
             $table->timestamps();
-            $table->softDeletes();
+            
+           
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('diaries');
+        Schema::dropIfExists('followings');
     }
 };

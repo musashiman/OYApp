@@ -9,13 +9,16 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Cloudinary;
+use Illuminate\Support\Facades\Storage;
+
+// コントローラーは繋がっているモデルごとに分けた方がやりやすい.
 
 class OyappController extends Controller
 {
     //
-    public function index(Diary $oyapp)
+    public function index(Diary $oyapp,User $user)
     {
-        return view("oyapps/index")->with(["oyapps"=>$oyapp->get()]);
+        return view("oyapps/index")->with(["oyapps"=>$oyapp->get(),"users"=>$user->get()]);
     }
    public function show(Diary $oyapp)
     {
@@ -32,10 +35,9 @@ class OyappController extends Controller
     $input = $request['oyapp'];
     $date = Carbon::now();
     $input["date"] = $date;
-    // この辺で詰まってる。ユーザーidをそのまま表示できるように改良したい。
-    // $user = Auth::user();
-    // $users_id = $user->id;
-    // $input["users_id"] = $users_id;
+    $user_id = Auth::id();
+    $input["user_id"] = $user_id;
+    
     if($request->file("image_path")){
     $image_path = Cloudinary::upload($request->file("image_path")->getRealPath())->getSecurePath();
     $input += ['image_path' =>$image_path];
@@ -51,9 +53,23 @@ class OyappController extends Controller
 
     public function update(OyappRequest $request,Diary $oyapp)
     {
-    $input_post = $request["oyapp"];
-    $oyapp->fill($input_post)->save();
-    return redirect("/oyapps/" .$oyapp->id);
+    $input = $request["oyapp"];
+    $date = Carbon::now();
+    $input["date"] = $date;
+    $image = $request->file("image_path");
+    $path=$oyapp->image_path;
+    if(isset($image)){
+        Storage::disk("public")->delete($path);
+        $path = $image->store("oyapp","public");
+        
+    }
+    $oyapp->update([
+            "body" =>$input["body"],
+            "image_path"=> $path,
+            "date"=> $date,
+        ]);
+    
+    return redirect("/oyapps/".$oyapp->id);
     }
 
     public function delete(Diary $oyapp)
@@ -62,29 +78,26 @@ class OyappController extends Controller
     return redirect("/");
     }
     
-    public function follow(User $user)
-    {
-        $follower = auth()->user();
-        // フォローしているかのチェック
-        $is_following = $follower->isFollowing($user->id);
-        if(!$is_following){
-            // フォローしていなければ以下の処理を行う。
-            $follower->follow($user->id);
-            return back();
-        }
-        
-    }
     
-    public function unfollow(User $user)
+    
+    
+    public function snapshot_store(Diary $diary,Snapshot $snapshot ,Request $request)
     {
-        $follower = auth()->user();
-        // フォローしているかのチェック
-        $is_following = $follower->isFollowing($user->id);
-        if($is_following){
-            $follower->unfollow($user->id);
-            return back();
-        }
+    $request->validate([
+            "image_path"=>"required|image",
+        ]);    
+        
+    $input = $request['snapshot'];
+    
+    $input += ['user_id' => Auth::id()];
+    $input += ['diary_id' => $diary->id];
+    $image_path = Cloudinary::upload($request->file("image_path")->getRealPath())->getSecurePath();
+    $input += ['image_path' =>$image_path];
+    
+    $snapshot->fill($input)->save();
+    return redirect('/oyapps/'.$oyapp->id);
     }
+   
 
 
 }

@@ -12,14 +12,19 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
+    private const SEEDERS = [
+            // TestUserCreateSeeder::class,
+            FollowingsTableSeeder::class,
+        ] ;
+    
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-        $this->call([OyappSeeder::class]);
+    
+        foreach(self::SEEDERS as $seeder){
+            $this->call($seeder);
+        }
+        
+        // $this->call(TestUserCreateSeeder::class);
+        // $this->call(FollowingsTableSeeder::class);
     }
 }

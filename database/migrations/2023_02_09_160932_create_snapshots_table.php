@@ -15,12 +15,15 @@ return new class extends Migration
     {
         Schema::create('snapshots', function (Blueprint $table) {
             $table->id();
-            $table->string("comment",200);
-            $table->string("image_path")->nullable();
-            $table->bigInteger("users_id")->unsigned();
-            $table->bigInteger("diary_id")->unsigned();
+            $table->unsignedBigInteger("user_id")->comment("ユーザーID");
+            $table->unsignedBigInteger("diary_id")->comment("DiaryのID");
+            
+            $table->string("comment")->comment("内容");
+            $table->string("image_path");
             $table->timestamps();
-            $table->softDeletes();
+            
+            $table->foreign("user_id")->references("id")->on("users");
+            $table->foreign("diary_id")->references("id")->on("diaries");
         });
     }
 

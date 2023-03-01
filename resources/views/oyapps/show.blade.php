@@ -44,7 +44,12 @@
         
         <p>ログインユーザー：{{Auth::user()->name }}</p>
         
-      
+        @if($oyapp->user_id != Auth::id() )
+        <form action="/snapshot/{{$oyapp->id}}">
+            <!--ここにスナップショット版の処理を書く。-->
+            <input>
+        </form>
+        @endif
         </x-app-layout>
     </body>
 </html>

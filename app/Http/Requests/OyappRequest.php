@@ -10,6 +10,7 @@ class OyappRequest extends FormRequest
     {
         return [
             'oyapp.body' => 'required|string|max:100',
+            'oyapp.image_path' => 'required|image',
         ];
     }
 }

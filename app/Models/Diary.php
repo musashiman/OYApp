@@ -12,17 +12,18 @@ class Diary extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $fillable = [
+        "user_id",
+        "body",
+        "date",
+        "image_path",
+        ];
     
     public function user()
     {
         return $this->belongsTo(User::class);
     }
     
-    protected $fillable = [
-        "body",
-        "image_path",
-        "date",
-        ];
     
 
 }

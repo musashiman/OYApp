@@ -24,13 +24,13 @@
                 @csrf
                 <div class="body">
                     <h2>body</h2>
-                    <input name="oyapp[body]" type="text" placeholder="モデルのbodyカラム部分" value="{{old('oyapp.body')}}"/><br>
-                    <p class="title_error" style="color:red">{{$errors->first("oyapp.body")}}</p>
+                    <input name="oyapp[body]" type="text" placeholder="モデルのbodyカラム部分" value="{{old('body')}}"/><br>
+                    <p class="body_error" style="color:red">{{$errors->first("oyapp.body")}}</p>
                 </div>
                 <div class="image_path">
                     <h2>image_path</h2>
-                    <input name="image_path" type="file" >
-                    <p class="body_error" style="color:red">{{$errors->first("oyapp.image_path")}}</p>
+                    <input name="oyapp[image_path]" type="file" >
+                    <p class="image_path_error" style="color:red">{{$errors->first("oyapp.image_path")}}</p>
                 </div>
                 
                 <input type="submit" value="作成"/>

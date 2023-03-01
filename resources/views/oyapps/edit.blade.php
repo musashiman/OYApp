@@ -20,17 +20,17 @@
         <div class='oyapps'>
            <h1 class="title">編集画面</h1>
                 <div class="content">
-                    <form action="/oyapps/{{ $oyapp->id }}" method="POST">
+                    <form action="/oyapps/{{ $oyapp->id }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
+                        @method('patch')
                         <div class='body'>
                             <h2>Body</h2>
-                            <input type='text' name='oyapp[body]' value="{{old( 'oyapp->body') }}">
+                            <input type='text' name='oyapp[body]'  value="{{$oyapp->body}}">
                             <p class="title_error" style="color:red">{{$errors->first("oyapp.body")}}</p>
                         </div>
                         <div class='image_path'>
-                            <h2>Image</h2></h2>
-                            <input name="image_path" type="file" />
+                            <h2>Image</h2>
+                            <input name="oyapp[image_path]" type="file"　value="{{$oyapp->image_path}}" />
                             <p class="body_error" style="color:red">{{$errors->first("oyapp.image_path")}}</p>
                         </div>
                         <input type="submit" value="保存">

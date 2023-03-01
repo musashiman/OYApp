@@ -10,18 +10,51 @@
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <!-- Styles -->
+        <style>
+            body {
+                font-family: 'Nunito', sans-serif;
+            }
+            
+            .oyapps{
+                display:flex;
+                
+            }
+            .oyapp{
+                border: 1px solid #333;
+                margin:10px 5px;
+            }
+        </style>
        
     </head>
     <body class="antialiased">
         <x-app-layout>
             <x-slot name="header">
                 <h1>Header</h1>
+            @if (Route::has('login'))
+                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
             </x-slot>
+            
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                <a href="/oyapps/create" >日記作成</a>
+            </h2>
+            </br>
         <div class='oyapps'>
-            <a href="/oyapps/create">create</a>
+            
+      
             
             @foreach ($oyapps as $oyapp)
-            <div class='oyapp'>
+            <div class='oyapp ' >
                 <h1 class="body">
                     <a href="/oyapps/{{$oyapp->id}}">{{$oyapp->body}}</a>
                 </h1>
@@ -38,24 +71,15 @@
             @endforeach
         </div>
         
-        <div class="d-flex justify-content-end flex-grow-1">
-           @if (Auth::user()->isFollowing($user->id))
-               <form action="{{ route('unfollow', ['user' => $user->id]) }}" method="POST">
-                   {{ csrf_field() }}
-                   {{ method_field('DELETE') }}
-
-                   <button type="submit" class="btn btn-danger">フォロー解除</button>
-               </form>
-            @else
-               <form action="{{ route('follow', ['user' => $user->id]) }}" method="POST">
-                   {{ csrf_field() }}
-
-                   <button type="submit" class="btn btn-primary">フォローする</button>
-               </form>
-            @endif
-        </div>
         
-        <p>ログインユーザー：{{Auth::user()->name }}</p>
+        
+        
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <a href="/follows/follow">誰かをフォローする</a>
+        </h2>
+      
+        
+        <h2>ログインユーザー：{{Auth::user()->name }}</h2>
         
         </x-app-layout>
         <script>
