@@ -39,10 +39,31 @@
         
           
             </x-slot>
-        <h1>フォローできる人</h1><br>
+        <h1>フォローするならこちら</h1>
+        @foreach($users as $user)
+            <div>
+                <p>{{$user->name}}</p>
+                <form action="{{route('follow',$user->id)}}" method="POST">
+                    @csrf
+                    <button type="submit">フォローする</button>
+                </form><!--ここにweb.phpを通じたルーティングとデリート部分の作成を行う。-->
+            </div>
+        @endforeach
+        <div class="follow_function">
+            
+        </div>
+            
+        <h1>フォローしている人</h1><br>
         <div class="followers">
             <p>ここにフォロワーのリストを作る</p>
+            <ul style="list-style: none;">
+                @foreach($followers as $follower)
+                  <li>{{$follower->name}}</li>
+                @endforeach
+            </ul>
         </div>
+        
+        
        </x-app-layout>
     </body>
 </html>

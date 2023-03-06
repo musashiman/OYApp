@@ -49,28 +49,26 @@
                 <a href="/oyapps/create" >日記作成</a>
             </h2>
             </br>
-        <div class='oyapps'>
-            
-      
-            
-            @foreach ($oyapps as $oyapp)
-            <div class='oyapp ' >
-                <h1 class="body">
-                    <a href="/oyapps/{{$oyapp->id}}">{{$oyapp->body}}</a>
-                </h1>
-                @if($oyapp->image_path== true)
-                    <img src="{{$oyapp->image_path}}" width="200" height="200" alt="写真がないよ。"/>
-                @endif
-                <p class="date">{{$oyapp->date}}</p>
-                <form action="/oyapps/{{$oyapp->id}}" id="form_{{$oyapp->id}}" method="post">
-                    @csrf
-                    @method("DELETE")
-                    <button type="button" onclick="deletePost({{$oyapp->id}})">delete</button>
-                </form>
+            <div class='oyapps'>
+                @foreach ($oyapps as $oyapp)
+                    @if( $oyapp->user_id == Auth::id())
+                        <div class='oyapp ' >
+                            <h1 class="body">
+                                <a href="/oyapps/{{$oyapp->id}}">{{$oyapp->body}}</a>
+                            </h1>
+                            @if($oyapp->image_path== true)
+                                <img src="{{$oyapp->image_path}}" width="200" height="200" alt="写真がないよ。"/>
+                            @endif
+                            <p class="date">{{$oyapp->date}}</p>
+                            <form action="/oyapps/{{$oyapp->id}}" id="form_{{$oyapp->id}}" method="post">
+                                @csrf
+                                @method("DELETE")
+                                <button type="button" onclick="deletePost({{$oyapp->id}})">delete</button>
+                            </form>
+                        </div>
+                    @endif
+                @endforeach
             </div>
-            @endforeach
-        </div>
-        
         
         
         

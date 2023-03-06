@@ -51,5 +51,29 @@ class User extends Authenticatable
     /**
      * Relationships
      */
+    public function followings()
+    {
+        return $this->belongsToMany(User::class,"followings","following_user_id","user_id")->withTimestamps();
+    }
     
+    public function followers()
+    {
+        return $this->belongsToMany(User::class,"followings","user_id","following_user_id")->withTimestamps();
+    }
+    
+    
+    public function follow(User $user)
+    {
+        $this->followings()->attach($user->id);
+    }
+    
+    public function unfollow(User $user)
+    {
+        $this->followings()->detach($user->id);
+    }
+    
+    public function isFollowing(User $user)
+    {
+        return $this->followings()->where("following_user_id",$user->id)->exists();
+    }
 }
